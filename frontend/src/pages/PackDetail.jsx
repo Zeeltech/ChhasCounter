@@ -134,6 +134,7 @@ export default function PackDetail() {
                 users={pack.participants}
                 onConsume={handleConsume}
                 disabled={isCompleted}
+                userBreakdown={summary?.userBreakdown}
               />
             </>
           )}

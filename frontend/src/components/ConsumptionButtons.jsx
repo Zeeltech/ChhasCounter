@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-function UserRow({ user, onConsume, disabled }) {
+function UserRow({ user, count, onConsume, disabled }) {
   const [loading, setLoading] = useState(false)
 
   const handle = async (qty) => {
@@ -14,7 +14,14 @@ function UserRow({ user, onConsume, disabled }) {
 
   return (
     <div className="user-consume-row">
+      <div className="user-avatar user-avatar-sm">
+        {user.avatarUrl
+          ? <img src={user.avatarUrl} alt={user.name} className="user-avatar-img" />
+          : <span>{user.name[0].toUpperCase()}</span>
+        }
+      </div>
       <span className="user-consume-name">{user.name}</span>
+      <span className="user-count-badge">{count}</span>
       <button
         className="consume-btn user-plus-btn"
         onClick={() => handle(1)}
@@ -27,12 +34,13 @@ function UserRow({ user, onConsume, disabled }) {
   )
 }
 
-export default function ConsumptionButtons({ users, onConsume, disabled }) {
+export default function ConsumptionButtons({ users, onConsume, disabled, userBreakdown }) {
   const sorted = [...users].sort((a, b) => a.id - b.id)
+  const countMap = Object.fromEntries((userBreakdown || []).map(b => [b.userId, b.consumed]))
   return (
     <div className="user-consume-list">
       {sorted.map(u => (
-        <UserRow key={u.id} user={u} onConsume={onConsume} disabled={disabled} />
+        <UserRow key={u.id} user={u} count={countMap[u.id] ?? 0} onConsume={onConsume} disabled={disabled} />
       ))}
     </div>
   )

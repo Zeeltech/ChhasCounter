@@ -28,4 +28,14 @@ export const undoLastEntry = (packId) => api.delete(`/packs/${packId}/undo`).the
 export const deleteLog = (logId) => api.delete(`/logs/${logId}`)
 export const updateLog = (logId, quantity) => api.put(`/logs/${logId}`, { quantity }).then(r => r.data)
 
+// Avatars
+export const uploadAvatar = (id, file) => {
+  const form = new FormData()
+  form.append('file', file)
+  return api.patch(`/users/${id}/avatar`, form, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  }).then(r => r.data)
+}
+export const removeAvatar = (id) => api.delete(`/users/${id}/avatar`)
+
 export default api

@@ -67,11 +67,24 @@ public class UserService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found: " + id));
     }
 
+    public UserDTO updateAvatar(Long id, String dataUrl) {
+        User user = findById(id);
+        user.setAvatarUrl(dataUrl);
+        return toDTO(userRepository.save(user));
+    }
+
+    public void removeAvatar(Long id) {
+        User user = findById(id);
+        user.setAvatarUrl(null);
+        userRepository.save(user);
+    }
+
     public UserDTO toDTO(User user) {
         UserDTO dto = new UserDTO();
         dto.setId(user.getId());
         dto.setName(user.getName());
         dto.setCreatedAt(user.getCreatedAt());
+        dto.setAvatarUrl(user.getAvatarUrl());
         return dto;
     }
 }
