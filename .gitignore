@@ -1,0 +1,26 @@
+# Build outputs
+backend/target/
+frontend/dist/
+frontend/.vite/
+
+# Dependencies
+frontend/node_modules/
+
+# Environment files (contain secrets)
+.env
+backend/.env
+frontend/.env.local
+frontend/.env.production.local
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# Logs
+*.log
+nohup.out
+
+# OS
+.DS_Store
+Thumbs.db
